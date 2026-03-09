@@ -1,24 +1,28 @@
-cmake_minimum_required(VERSION 3.29)
-project(ide)
+cmake_minimum_required(VERSION 3.21)
+project(OpenVerilogIDE LANGUAGES CXX)
 
-# Guide: https://doc.qt.io/qt-6/cmake-get-started.html
+# Block common polluting prefixes on macOS (Homebrew, local installs)
+# This prevents find_package from considering them at all
+list(APPEND CMAKE_IGNORE_PREFIX_PATH
+    "/opt/homebrew"
+    "/usr/local"
+)
 
-set(CMAKE_CXX_STANDARD 17) # Qt6 has abseil[cxx17] dependency
+set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-set(CMAKE_INCLUDE_CURRENT_DIR  ON)
+set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
+# set(CMAKE_CXX_CLANG_TIDY clang-tidy;-p=${CMAKE_BINARY_DIR})
 
-find_package(Qt6 REQUIRED COMPONENTS Core)
+set(CMAKE_AUTOMOC ON)
+set(CMAKE_AUTOUIC ON)
+set(CMAKE_AUTORCC ON)
 
-qt_standard_project_setup()
+find_package(Qt6 REQUIRED COMPONENTS Core Concurrent Widgets)
+find_package(Eigen3 REQUIRED)
 
-qt_add_executable(${PROJECT_NAME} src/main.cpp)
+enable_testing()
 
-target_include_directories(include)
+add_subdirectory(src)
+add_subdirectory(tests)
 
-target_link_libraries(${PROJECT_NAME} PRIVATE Qt6::Core)
-
-set_target_properties(${PROJECT_NAME} PROPERTIES
-    WIN32_EXECUTABLE
-    MACOSX_BUNDLE ON
-)
