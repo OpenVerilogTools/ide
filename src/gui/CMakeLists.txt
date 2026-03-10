@@ -1,6 +1,8 @@
 add_library(gui STATIC
     mainwindow.cc
     mainwindow.h
+    sidebar.cc
+    sidebar.h
 )
 
 target_link_libraries(gui PUBLIC
