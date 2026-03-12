@@ -1,6 +1,10 @@
 add_library(gui STATIC
     mainwindow.cc
     mainwindow.h
+    sidebar.cc
+    sidebar.h
+    texteditor.cc
+    texteditor.h
 )
 
 target_link_libraries(gui PUBLIC
