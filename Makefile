@@ -13,5 +13,8 @@ build:
 test:
 	cd build && ctest --output-on-failure
 
+run:
+	./build/src/IDE
+
 clean:
 	rm -rf build

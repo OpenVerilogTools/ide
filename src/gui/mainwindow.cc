@@ -4,6 +4,7 @@
 #include <QSplitter>
 
 #include "sidebar.h"
+#include "texteditor.h"
 
 MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent) {
     setWindowTitle("IDE");
@@ -11,11 +12,17 @@ MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent) {
 
     QLabel* label = new QLabel("OpenVerilogTools");
 
-    QSplitter* splitter = new QSplitter;
-    SideBar* sidebar = new SideBar(splitter);
+    QSplitter* sidebarSplitter = new QSplitter;
+    SideBar* sidebar = new SideBar(sidebarSplitter);
 
-    splitter->addWidget(sidebar);
-    splitter->addWidget(label);
+    QSplitter* editorSplitter = new QSplitter(Qt::Vertical);
+    TextEditor* textEditor = new TextEditor(editorSplitter);
 
-    setCentralWidget(splitter);
+    sidebarSplitter->addWidget(sidebar);
+    sidebarSplitter->addWidget(editorSplitter);
+
+    editorSplitter->addWidget(textEditor);
+    editorSplitter->addWidget(label); // placeholder for terminal
+
+    setCentralWidget(sidebarSplitter);
 }
